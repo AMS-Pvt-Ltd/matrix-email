@@ -5,12 +5,17 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  build:
+  build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
+
     steps:
-    - name: Create SSH Connection
+    # Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Set up SSH and execute commands
+    - name: SSH to Server and Deploy
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
@@ -18,11 +23,25 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-           cd ams-apps
-           sudo systemctl stop matrixEmail
-           if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
-           git clone -b master --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
-           cd matrix-email
-           chmod +x ./mvnw
-           ./mvnw clean compile install package -Dmaven.test.skip=true
-           sudo  systemctl start matrixEmail
+          cd ams-apps
+          
+          # Stop the existing service
+          echo "${{ secrets.PASSWORD }}" | sudo -S systemctl stop matrixEmail
+          
+          # Remove old project directory if exists
+          if [ -d "matrix-email" ]; then
+            rm -rf "matrix-email"
+          fi
+          
+          # Clone the repository
+          git clone -b master --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
+          cd matrix-email
+          
+          # Grant execute permissions to Maven wrapper
+          chmod +x ./mvnw
+          
+          # Build and package the application
+          ./mvnw clean compile install package -Dmaven.test.skip=true
+          
+          # Start the service
+          echo "${{ secrets.PASSWORD }}" | sudo -S systemctl start matrixEmail
