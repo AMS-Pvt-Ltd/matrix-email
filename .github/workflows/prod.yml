@@ -2,7 +2,7 @@ name: Deploy Matrix Email
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "master" ]
 
 jobs:
 
