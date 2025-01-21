@@ -18,12 +18,12 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-          cd ams-apps
-          sudo systemctl stop matrixEmail
-          if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
-          git clone -b prod --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
-          cd matrix-email
-          chmod +x ./mvnw
-          ./mvnw clean
-          ./mvnw bootJar
-          sudo systemctl start matrixEmail
+           cd ams-apps
+           echo "${{ secrets.PASSWORD }}" | sudo -S systemctl stop matrixEmail
+           if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
+           git clone -b prod --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
+           cd matrix-email
+           chmod +x ./mvnw
+           ./mvnw clean
+           ./mvnw bootJar
+           echo "${{ secrets.PASSWORD }}" | sudo -S systemctl start matrixEmail
