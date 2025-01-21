@@ -24,6 +24,5 @@ jobs:
            git clone -b master --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
            cd matrix-email
            chmod +x ./mvnw
-           ./mvnw clean
-           ./mvnw bootJar
+           ./mvnw clean compile install package
            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl start matrixEmail
