@@ -19,13 +19,13 @@ public class EmailCronjob {
     public ResponseEntity<Boolean> sendEmailWithExternalApi() {
         try {
             // Define the external API URL
-            String externalApiUrl = "http://Localhost:8080/api/control-testing-phase/email";
+            String externalApiUrl = "http://182.184.52.88:8122/api/control-testing-phase/email";
             
             // Make a GET call to the external API
             String response = restTemplate.getForObject(externalApiUrl, String.class);
             
             
-            	externalApiUrl = "http://Localhost:8080/api/operational-control-testing-phase/email";
+            	externalApiUrl = "http://182.184.52.88:8122/api/operational-control-testing-phase/email";
             	
             	
             	response = restTemplate.getForObject(externalApiUrl, String.class);

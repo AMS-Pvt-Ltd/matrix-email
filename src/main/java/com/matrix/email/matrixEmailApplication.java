@@ -15,6 +15,6 @@ public class matrixEmailApplication implements WebServerFactoryCustomizer<Config
 	}
 	 @Override
 	    public void customize(ConfigurableWebServerFactory factory) {
-	        factory.setPort(8081); // Change the port here
+	        factory.setPort(8123); // Change the port here
 	    }
 }
