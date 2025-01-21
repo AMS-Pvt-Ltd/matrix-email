@@ -15,17 +15,17 @@ public class EmailCronjob {
 	  // Define the external API URL
 
     // Run the method every 5 minutes (you can change the cron expression as needed)
-    @Scheduled(cron = "0 * * * * ?")  
+	@Scheduled(cron = "30 * * * * *")  
     public ResponseEntity<Boolean> sendEmailWithExternalApi() {
         try {
             // Define the external API URL
-            String externalApiUrl = "http://localhost:8080/api/control-testing-phase/email";
+            String externalApiUrl = "http://Localhost:8080/api/control-testing-phase/email";
             
             // Make a GET call to the external API
             String response = restTemplate.getForObject(externalApiUrl, String.class);
             
             
-            	externalApiUrl = "http://localhost:8080/api/operational-control-testing-phase/email";
+            	externalApiUrl = "http://Localhost:8080/api/operational-control-testing-phase/email";
             	
             	
             	response = restTemplate.getForObject(externalApiUrl, String.class);
