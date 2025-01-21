@@ -19,10 +19,10 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
            cd ams-apps
-           echo "${{ secrets.PASSWORD }}" | sudo -S systemctl stop matrixEmail
+           sudo systemctl stop matrixEmail
            if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
            git clone -b master --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
            cd matrix-email
            chmod +x ./mvnw
            ./mvnw clean compile install package -Dmaven.test.skip=true
-           echo "${{ secrets.PASSWORD }}" | sudo -S systemctl start matrixEmail
+           sudo  systemctl start matrixEmail
