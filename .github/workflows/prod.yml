@@ -21,7 +21,7 @@ jobs:
            cd ams-apps
            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl stop matrixEmail
            if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
-           git clone -b prod --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
+           git clone -b master --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
            cd matrix-email
            chmod +x ./mvnw
            ./mvnw clean
