@@ -1,0 +1,28 @@
+name: Deploy Matrix Email
+
+on:
+  push:
+    branches: [ "prod" ]
+
+jobs:
+
+  build:
+    name: Build and Deploy
+    runs-on: self-hosted
+    steps:
+    - name: Create SSH Connection
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          cd ams-apps
+          sudo systemctl stop matrixEmail
+          if [ -d "matrix-email" ]; then rm -rf "matrix-email"; fi
+          git clone -b prod --single-branch https://github.com/AMS-Pvt-Ltd/matrix-email.git
+          cd matrix-email
+          chmod +x ./mvnw
+          ./mvnw clean
+          ./mvnw bootJar
+          sudo systemctl start matrixEmail
